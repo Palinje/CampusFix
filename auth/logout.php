@@ -5,11 +5,11 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Unset all session variables
-$_SESSION = [];
+session_unset();
 
 // Destroy the session completely
 session_destroy();
 
-// Redirect to home/login page
-header("Location: /CampusFix/index.php");
+// Redirect to login page
+header("Location: login.php");
 exit();
