@@ -22,3 +22,22 @@ if (session_status() === PHP_SESSION_NONE) {
 <body>
     <!-- Page Wrapper -->
     <div class="d-flex flex-column min-vh-100">
+        <?php require_once __DIR__ . '/navbar.php'; ?>
+        
+        <div class="container mt-3">
+            <?php if (isset($_SESSION['flash_success'])): ?>
+                <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                    <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($_SESSION['flash_success']) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['flash_success']); ?>
+            <?php endif; ?>
+            
+            <?php if (isset($_SESSION['flash_error'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+                    <i class="fa-solid fa-circle-exclamation me-2"></i><?= htmlspecialchars($_SESSION['flash_error']) ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['flash_error']); ?>
+            <?php endif; ?>
+        </div>

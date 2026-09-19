@@ -8,7 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['status'] ?? null;
 
     if (!$id || !$status) {
-        header("Location: ../admin/requests.php?error=Missing information.");
+        $_SESSION['flash_error'] = "Missing information.";
+        header("Location: ../admin/requests.php");
         exit();
     }
 
@@ -16,10 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("UPDATE maintenance_requests SET status = ? WHERE id = ?");
         $stmt->execute([$status, $id]);
 
-        header("Location: ../admin/request_view.php?id=" . urlencode($id) . "&success=Status updated successfully.");
+        $_SESSION['flash_success'] = "Status updated successfully.";
+        header("Location: ../admin/request_view.php?id=" . urlencode($id));
         exit();
     } catch (PDOException $e) {
-        header("Location: ../admin/request_view.php?id=" . urlencode($id) . "&error=Database error updating status.");
+        $_SESSION['flash_error'] = "Database error updating status.";
+        header("Location: ../admin/request_view.php?id=" . urlencode($id));
         exit();
     }
 } else {

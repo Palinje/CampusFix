@@ -11,7 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Basic validation
     if (empty($location) || empty($problem_type) || empty($description)) {
-        header("Location: ../user/submit_request.php?error=All fields are required.");
+        $_SESSION['flash_error'] = "All fields are required.";
+        header("Location: ../user/submit_request.php");
         exit();
     }
 
@@ -21,11 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$user_id, $location, $problem_type, $description, $status]);
         
         // Redirect on success
-        header("Location: ../user/my_requests.php?success=Maintenance request submitted successfully.");
+        $_SESSION['flash_success'] = "Maintenance request submitted successfully.";
+        header("Location: ../user/my_requests.php");
         exit();
     } catch (PDOException $e) {
         // For development, you might log the error. Redirecting back to form with error for the user.
-        header("Location: ../user/submit_request.php?error=Database error. Please try again later.");
+        $_SESSION['flash_error'] = "Database error. Please try again later.";
+        header("Location: ../user/submit_request.php");
         exit();
     }
 } else {
