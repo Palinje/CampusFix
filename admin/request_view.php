@@ -28,20 +28,20 @@ if (!$request) {
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold"><i class="fa-solid fa-ticket me-2"></i>Manage Request #<?= htmlspecialchars($request['id']) ?></h2>
+        <h2 class="fw-bold"><i class="fa-solid fa-ticket me-2"></i>Manage Request #<?= htmlspecialchars($request['id'], ENT_QUOTES, 'UTF-8') ?></h2>
         <a href="requests.php" class="btn btn-outline-secondary shadow-sm rounded-pill px-4">&larr; Back to Requests</a>
     </div>
 
     <?php if (isset($_GET['success'])): ?>
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($_GET['success']) ?>
+            <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($_GET['success'], ENT_QUOTES, 'UTF-8') ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
     
     <?php if (isset($_GET['error'])): ?>
         <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-            <i class="fa-solid fa-circle-exclamation me-2"></i><?= htmlspecialchars($_GET['error']) ?>
+            <i class="fa-solid fa-circle-exclamation me-2"></i><?= htmlspecialchars($_GET['error'], ENT_QUOTES, 'UTF-8') ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
@@ -58,17 +58,17 @@ if (!$request) {
                         <tbody>
                             <tr>
                                 <th class="text-muted ps-0" style="width: 150px;">Location:</th>
-                                <td><span class="fw-bold fs-5 text-primary"><?= htmlspecialchars($request['location']) ?></span></td>
+                                <td><span class="fw-bold fs-5 text-primary"><?= htmlspecialchars($request['location'], ENT_QUOTES, 'UTF-8') ?></span></td>
                             </tr>
                             <tr>
                                 <th class="text-muted ps-0">Problem Type:</th>
-                                <td><span class="badge bg-secondary px-3 py-2"><?= htmlspecialchars($request['problem_type']) ?></span></td>
+                                <td><span class="badge bg-secondary px-3 py-2"><?= htmlspecialchars($request['problem_type'], ENT_QUOTES, 'UTF-8') ?></span></td>
                             </tr>
                             <tr>
                                 <th class="text-muted ps-0">Description:</th>
                                 <td>
                                     <div class="p-3 bg-light rounded-3 border border-light-subtle text-dark" style="min-height: 100px;">
-                                        <?= nl2br(htmlspecialchars($request['description'])) ?>
+                                        <?= nl2br(htmlspecialchars($request['description'], ENT_QUOTES, 'UTF-8')) ?>
                                     </div>
                                 </td>
                             </tr>
@@ -116,12 +116,12 @@ if (!$request) {
                             <i class="fa-solid fa-user"></i>
                         </div>
                         <div>
-                            <h6 class="fw-bold mb-0"><?= htmlspecialchars($request['full_name']) ?></h6>
-                            <span class="badge bg-secondary mt-1"><?= htmlspecialchars(ucfirst($request['role'])) ?></span>
+                            <h6 class="fw-bold mb-0"><?= htmlspecialchars($request['full_name'], ENT_QUOTES, 'UTF-8') ?></h6>
+                            <span class="badge bg-secondary mt-1"><?= htmlspecialchars(ucfirst($request['role'], ENT_QUOTES, 'UTF-8')) ?></span>
                         </div>
                     </div>
                     <hr>
-                    <p class="mb-0 text-muted"><i class="fa-solid fa-envelope me-2 text-primary"></i><a href="mailto:<?= htmlspecialchars($request['email']) ?>" class="text-decoration-none"><?= htmlspecialchars($request['email']) ?></a></p>
+                    <p class="mb-0 text-muted"><i class="fa-solid fa-envelope me-2 text-primary"></i><a href="mailto:<?= htmlspecialchars($request['email'], ENT_QUOTES, 'UTF-8') ?>" class="text-decoration-none"><?= htmlspecialchars($request['email'], ENT_QUOTES, 'UTF-8') ?></a></p>
                 </div>
             </div>
         </div>

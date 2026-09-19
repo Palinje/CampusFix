@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="card-body p-4">
                     <?php if ($error): ?>
-                        <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+                        <div class="alert alert-danger"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
                     <?php endif; ?>
                     <?php if ($success): ?>
                         <div class="alert alert-success"><?= $success ?></div>

@@ -44,7 +44,7 @@ $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : '';
                     <li class="nav-item">
                         <span class="nav-link text-light me-3">
                             <i class="fa-solid fa-user"></i> 
-                            <?php echo htmlspecialchars($_SESSION['full_name'] ?? 'User'); ?>
+                            <?php echo htmlspecialchars($_SESSION['full_name'] ?? 'User', ENT_QUOTES, 'UTF-8'); ?>
                         </span>
                     </li>
                     <li class="nav-item">

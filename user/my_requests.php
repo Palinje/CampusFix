@@ -19,7 +19,7 @@ $requests = $stmt->fetchAll();
 
     <?php if (isset($_GET['success'])): ?>
         <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($_GET['success']) ?>
+            <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($_GET['success'], ENT_QUOTES, 'UTF-8') ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
@@ -49,9 +49,9 @@ $requests = $stmt->fetchAll();
                         <?php else: ?>
                             <?php foreach ($requests as $request): ?>
                                 <tr>
-                                    <td class="ps-3 fw-bold text-muted">#<?= htmlspecialchars($request['id']) ?></td>
-                                    <td><?= htmlspecialchars($request['location']) ?></td>
-                                    <td><?= htmlspecialchars($request['problem_type']) ?></td>
+                                    <td class="ps-3 fw-bold text-muted">#<?= htmlspecialchars($request['id'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($request['location'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($request['problem_type'], ENT_QUOTES, 'UTF-8') ?></td>
                                     <td>
                                         <?php if ($request['status'] === 'Pending'): ?>
                                             <span class="badge rounded-pill bg-warning text-dark px-3 py-2"><i class="fa-regular fa-clock me-1"></i>Pending</span>
@@ -60,7 +60,7 @@ $requests = $stmt->fetchAll();
                                         <?php elseif ($request['status'] === 'Completed'): ?>
                                             <span class="badge rounded-pill bg-success px-3 py-2"><i class="fa-solid fa-check me-1"></i>Completed</span>
                                         <?php else: ?>
-                                            <span class="badge rounded-pill bg-secondary px-3 py-2"><?= htmlspecialchars($request['status']) ?></span>
+                                            <span class="badge rounded-pill bg-secondary px-3 py-2"><?= htmlspecialchars($request['status'], ENT_QUOTES, 'UTF-8') ?></span>
                                         <?php endif; ?>
                                     </td>
                                     <td><?= date('M d, Y h:i A', strtotime($request['created_at'])) ?></td>

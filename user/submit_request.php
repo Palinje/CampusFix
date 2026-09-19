@@ -12,7 +12,7 @@ require_once '../includes/header.php';
                 </div>
                 <div class="card-body p-4">
                     <?php if (isset($_GET['error'])): ?>
-                        <div class="alert alert-danger"><?= htmlspecialchars($_GET['error']) ?></div>
+                        <div class="alert alert-danger"><?= htmlspecialchars($_GET['error'], ENT_QUOTES, 'UTF-8') ?></div>
                     <?php endif; ?>
                     
                     <form method="POST" action="../actions/submit_request.php">

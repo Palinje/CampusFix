@@ -43,7 +43,7 @@ $requests = $stmt->fetchAll();
         <form method="GET" action="requests.php" class="row g-3 align-items-end">
             <div class="col-md-5">
                 <label for="search" class="form-label fw-bold text-muted">Search (Room, Type, or Desc)</label>
-                <input type="text" class="form-control" id="search" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="e.g., Room 205, Plumbing...">
+                <input type="text" class="form-control" id="search" name="search" value="<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>" placeholder="e.g., Room 205, Plumbing...">
             </div>
             <div class="col-md-4">
                 <label for="status" class="form-label fw-bold text-muted">Status Filter</label>
@@ -87,13 +87,13 @@ $requests = $stmt->fetchAll();
                         <?php else: ?>
                             <?php foreach ($requests as $req): ?>
                                 <tr>
-                                    <td class="ps-4 fw-bold text-muted">#<?= htmlspecialchars($req['id']) ?></td>
+                                    <td class="ps-4 fw-bold text-muted">#<?= htmlspecialchars($req['id'], ENT_QUOTES, 'UTF-8') ?></td>
                                     <td>
-                                        <div class="fw-bold"><?= htmlspecialchars($req['full_name']) ?></div>
-                                        <div class="text-muted small"><?= htmlspecialchars($req['email']) ?></div>
+                                        <div class="fw-bold"><?= htmlspecialchars($req['full_name'], ENT_QUOTES, 'UTF-8') ?></div>
+                                        <div class="text-muted small"><?= htmlspecialchars($req['email'], ENT_QUOTES, 'UTF-8') ?></div>
                                     </td>
-                                    <td><?= htmlspecialchars($req['location']) ?></td>
-                                    <td><?= htmlspecialchars($req['problem_type']) ?></td>
+                                    <td><?= htmlspecialchars($req['location'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($req['problem_type'], ENT_QUOTES, 'UTF-8') ?></td>
                                     <td>
                                         <?php if ($req['status'] === 'Pending'): ?>
                                             <span class="badge bg-warning text-dark rounded-pill px-3 py-2">Pending</span>
@@ -102,7 +102,7 @@ $requests = $stmt->fetchAll();
                                         <?php elseif ($req['status'] === 'Completed'): ?>
                                             <span class="badge bg-success rounded-pill px-3 py-2">Completed</span>
                                         <?php else: ?>
-                                            <span class="badge bg-secondary rounded-pill px-3 py-2"><?= htmlspecialchars($req['status']) ?></span>
+                                            <span class="badge bg-secondary rounded-pill px-3 py-2"><?= htmlspecialchars($req['status'], ENT_QUOTES, 'UTF-8') ?></span>
                                         <?php endif; ?>
                                     </td>
                                     <td><?= date('M d, Y', strtotime($req['created_at'])) ?></td>

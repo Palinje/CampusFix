@@ -27,7 +27,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <div class="container mt-3">
             <?php if (isset($_SESSION['flash_success'])): ?>
                 <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-                    <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($_SESSION['flash_success']) ?>
+                    <i class="fa-solid fa-circle-check me-2"></i><?= htmlspecialchars($_SESSION['flash_success'], ENT_QUOTES, 'UTF-8') ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <?php unset($_SESSION['flash_success']); ?>
@@ -35,7 +35,7 @@ if (session_status() === PHP_SESSION_NONE) {
             
             <?php if (isset($_SESSION['flash_error'])): ?>
                 <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
-                    <i class="fa-solid fa-circle-exclamation me-2"></i><?= htmlspecialchars($_SESSION['flash_error']) ?>
+                    <i class="fa-solid fa-circle-exclamation me-2"></i><?= htmlspecialchars($_SESSION['flash_error'], ENT_QUOTES, 'UTF-8') ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <?php unset($_SESSION['flash_error']); ?>
