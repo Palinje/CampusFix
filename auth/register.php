@@ -10,8 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $role = $_POST['role'] ?? 'student'; // Default role
+    $csrf = $_POST['csrf_token'] ?? '';
 
-    if (empty($full_name) || empty($email) || empty($password)) {
+    if (!hash_equals($_SESSION['csrf_token'] ?? '', $csrf)) {
+        $error = 'Invalid CSRF token.';
+    } elseif (empty($full_name) || empty($email) || empty($password)) {
         $error = 'All fields are required.';
     } else {
         // Check if email already exists
@@ -49,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="alert alert-success"><?= $success ?></div>
                     <?php else: ?>
                     <form method="POST" action="">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
                         <div class="mb-3">
                             <label for="full_name" class="form-label">Full Name</label>
                             <input type="text" class="form-control" id="full_name" name="full_name" required>

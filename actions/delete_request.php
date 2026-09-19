@@ -3,6 +3,7 @@ require_once '../includes/auth.php';
 require_once '../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $id = $_POST['id'] ?? null;
     $user_id = $_SESSION['user_id'];
     $role = $_SESSION['user_role'];

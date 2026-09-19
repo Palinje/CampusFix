@@ -15,7 +15,9 @@ require_once '../includes/header.php';
                         <div class="alert alert-danger"><?= htmlspecialchars($_GET['error'], ENT_QUOTES, 'UTF-8') ?></div>
                     <?php endif; ?>
                     
-                    <form method="POST" action="../actions/submit_request.php">
+                    <form action="../actions/submit_request.php" method="POST">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                        
                         <div class="mb-3">
                             <label for="location" class="form-label fw-bold">Location (e.g., Room 205, Main Hall)</label>
                             <input type="text" class="form-control" id="location" name="location" required>

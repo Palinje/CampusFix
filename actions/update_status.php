@@ -4,6 +4,7 @@ requireAdmin(); // Guard - Only admin and maintenance can update status
 require_once '../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $id = $_POST['id'] ?? null;
     $status = $_POST['status'] ?? null;
 

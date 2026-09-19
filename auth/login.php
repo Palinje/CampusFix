@@ -18,7 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if (empty($email) || empty($password)) {
+    $csrf = $_POST['csrf_token'] ?? '';
+
+    if (!hash_equals($_SESSION['csrf_token'] ?? '', $csrf)) {
+        $error = 'Invalid CSRF token.';
+    } elseif (empty($email) || empty($password)) {
         $error = 'Please enter both email and password.';
     } else {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
@@ -27,6 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Verify user exists and password is correct
         if ($user && password_verify($password, $user['password'])) {
+            // Prevent session fixation
+            session_regenerate_id(true);
+            
             // Start session and store variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['full_name'] = $user['full_name'];
@@ -58,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="alert alert-danger"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></div>
                     <?php endif; ?>
                     <form method="POST" action="">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="email" name="email" required>

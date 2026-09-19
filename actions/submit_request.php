@@ -3,6 +3,7 @@ require_once '../includes/auth.php'; // Guard
 require_once '../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrfToken($_POST['csrf_token'] ?? '');
     $user_id = $_SESSION['user_id'];
     $location = trim($_POST['location'] ?? '');
     $problem_type = trim($_POST['problem_type'] ?? '');

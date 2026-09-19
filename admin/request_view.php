@@ -91,7 +91,8 @@ if (!$request) {
                 </div>
                 <div class="card-body p-4">
                     <form method="POST" action="../actions/update_status.php">
-                        <input type="hidden" name="id" value="<?= $request['id'] ?>">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="hidden" name="id" value="<?= htmlspecialchars($request['id'], ENT_QUOTES, 'UTF-8') ?>">
                         <div class="mb-4">
                             <label for="status" class="form-label text-muted fw-bold">Current Status</label>
                             <select class="form-select border-2" id="status" name="status" required>
@@ -122,6 +123,21 @@ if (!$request) {
                     </div>
                     <hr>
                     <p class="mb-0 text-muted"><i class="fa-solid fa-envelope me-2 text-primary"></i><a href="mailto:<?= htmlspecialchars($request['email'], ENT_QUOTES, 'UTF-8') ?>" class="text-decoration-none"><?= htmlspecialchars($request['email'], ENT_QUOTES, 'UTF-8') ?></a></p>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="card shadow-sm border-0 rounded-4 mt-4 border-top border-4 border-danger">
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                    <h5 class="fw-bold mb-0 text-danger">Danger Zone</h5>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted small">Deleting a request permanently removes it from the database.</p>
+                    <form method="POST" action="../actions/delete_request.php" onsubmit="return confirm('Are you sure you want to delete this request? This action cannot be undone.');">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="hidden" name="id" value="<?= htmlspecialchars($request['id'], ENT_QUOTES, 'UTF-8') ?>">
+                        <button type="submit" class="btn btn-outline-danger w-100 shadow-sm py-2"><i class="fa-solid fa-trash me-2"></i>Delete Request</button>
+                    </form>
                 </div>
             </div>
         </div>
