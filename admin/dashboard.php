@@ -17,6 +17,13 @@ $total = $stats['total'] ?? 0;
 $pending = $stats['pending'] ?? 0;
 $in_progress = $stats['in_progress'] ?? 0;
 $completed = $stats['completed'] ?? 0;
+
+$is_super_admin = ($_SESSION['user_role'] === 'admin');
+$total_users = 0;
+if ($is_super_admin) {
+    $stmt_users = $pdo->query("SELECT COUNT(*) FROM users");
+    $total_users = $stmt_users->fetchColumn();
+}
 ?>
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -51,7 +58,19 @@ $completed = $stats['completed'] ?? 0;
     </div>
     
     <div class="text-center mt-5">
-        <a href="requests.php" class="btn btn-primary btn-lg px-5 shadow-sm rounded-pill">Manage All Requests <i class="fa-solid fa-arrow-right ms-2"></i></a>
+        <a href="requests.php" class="btn btn-primary btn-lg px-5 shadow-sm rounded-pill mb-3">Manage All Requests <i class="fa-solid fa-arrow-right ms-2"></i></a>
+        <?php if ($is_super_admin): ?>
+            <br>
+            <div class="card shadow-sm border-0 rounded-4 mt-4 mx-auto" style="max-width: 500px;">
+                <div class="card-body p-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-1"><i class="fa-solid fa-users me-2 text-primary"></i>System Users</h4>
+                        <p class="text-muted mb-0"><?= $total_users ?> registered users</p>
+                    </div>
+                    <a href="users.php" class="btn btn-outline-primary rounded-pill px-4">Manage Users</a>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 <?php require_once '../includes/footer.php'; ?>

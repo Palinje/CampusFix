@@ -118,7 +118,7 @@ if (!$request) {
                         </div>
                         <div>
                             <h6 class="fw-bold mb-0"><?= htmlspecialchars($request['full_name'], ENT_QUOTES, 'UTF-8') ?></h6>
-                            <span class="badge bg-secondary mt-1"><?= htmlspecialchars(ucfirst($request['role'], ENT_QUOTES, 'UTF-8')) ?></span>
+                            <span class="badge bg-secondary mt-1"><?= htmlspecialchars(ucfirst($request['role']), ENT_QUOTES, 'UTF-8') ?></span>
                         </div>
                     </div>
                     <hr>

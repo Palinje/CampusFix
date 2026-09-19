@@ -4,6 +4,9 @@ $db   = 'school_maintenance_db';
 $user = 'root';
 $pass = '';
 
+// Define base URL for absolute paths
+define('BASE_URL', '/GitHub_Clone_File_Projects/CampusFix');
+
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

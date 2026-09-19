@@ -1,5 +1,6 @@
 <?php
 require_once '../includes/auth.php'; // Guard
+require_once '../config/db.php';
 require_once '../includes/header.php';
 ?>
 
