@@ -1,0 +1,124 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Glassmorphism Navbar - Premium Dark Glass */
+.glass-navbar {
+    background: rgba(10, 25, 55, 0.88) !important; /* Deep navy semi-transparent */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.5); /* Crisp glass edge highlight */
+    box-shadow: 0 10px 40px rgba(10, 25, 55, 0.6), 0 0 25px rgba(22, 119, 255, 0.45), inset 0 1px 0 rgba(255,255,255,0.2);
+    border-radius: 16px;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 991.98px) {
+    .glass-navbar {
+        border-radius: 0;
+        margin-top: 0;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+    }
+}
+
+/* Navbar branding */
+.glass-navbar .navbar-brand {
+    font-weight: 700;
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+}
+.glass-navbar .navbar-brand:hover {
+    opacity: 0.9;
+}
+
+/* Navbar links */
+.glass-navbar .navbar-nav .nav-item {
+    position: relative;
+}
+
+.glass-navbar .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    font-size: 1.05rem;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem !important;
+}
+
+.glass-navbar .nav-link:hover, 
+.glass-navbar .nav-link.active {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.glass-navbar .nav-link i {
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+}
+
+/* Active State Underline Glow */
+.glass-navbar .nav-link.active::after,
+.glass-navbar .nav-link:hover::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background-color: #1677FF;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #1677FF, 0 0 20px #1677FF;
+}
+
+/* Buttons */
+.glass-btn-login, .glass-btn-register {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 50px !important; /* Pill shape */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* Login Button: dark transparent glass with blue border */
+.glass-btn-login {
+    background: rgba(0, 0, 0, 0.2) !important;
+    color: #ffffff !important;
+    border: 1.5px solid #1677FF !important;
+    box-shadow: 0 0 15px rgba(22, 119, 255, 0.2) !important;
+}
+
+.glass-btn-login:hover {
+    background: rgba(22, 119, 255, 0.15) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 20px rgba(22, 119, 255, 0.4) !important;
+    transform: translateY(-2px) scale(1.02);
+}
+
+.glass-btn-login i {
+    color: #ffffff !important;
+}
+
+/* Register Button: prominent blue gradient */
+.glass-btn-register {
+    background: linear-gradient(135deg, #1677FF, #0D6EFD) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 6px 15px rgba(22, 119, 255, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+}
+
+.glass-btn-register:hover {
+    background: linear-gradient(135deg, #3A8FFF, #1677FF) !important;
+    box-shadow: 0 8px 25px rgba(22, 119, 255, 0.6) !important;
+    transform: translateY(-2px) scale(1.02);
+}
+
+.glass-btn-register i {
+    color: #ffffff !important;
+}

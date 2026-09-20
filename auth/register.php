@@ -40,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
+            <div class="text-center mb-4">
+                <img src="../assets/images/logo.png" alt="CampusFix Logo" style="max-height: 120px;" class="rounded shadow-sm">
+            </div>
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0"><i class="fa-solid fa-user-plus me-2"></i>Register</h4>

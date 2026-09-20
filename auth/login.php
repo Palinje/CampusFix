@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && password_verify($password, $user['password'])) {
             // Prevent session fixation
             session_regenerate_id(true);
-            
+
             // Start session and store variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['full_name'] = $user['full_name'];
@@ -56,6 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-5">
+            <div class="text-center mb-4">
+                <img src="../assets/images/logo.png" alt="CampusFix Logo" style="max-height: 120px;" class="rounded shadow-sm">
+            </div>
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-success text-white">
                     <h4 class="mb-0"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</h4>
