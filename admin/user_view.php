@@ -32,6 +32,16 @@ $stmt_stats = $pdo->prepare("SELECT
     FROM maintenance_requests WHERE user_id = ?");
 $stmt_stats->execute([$id]);
 $stats = $stmt_stats->fetch();
+
+$completedProblems = [];
+if ($user['role'] === 'maintenance') {
+    $stmt_completed = $pdo->prepare("SELECT location, problem_type, description
+                                     FROM maintenance_requests
+                                     WHERE completed_by = ? AND status = 'Completed'
+                                     ORDER BY id DESC");
+    $stmt_completed->execute([$id]);
+    $completedProblems = $stmt_completed->fetchAll();
+}
 ?>
 
 <div class="container mt-5">
@@ -79,6 +89,27 @@ $stats = $stmt_stats->fetch();
                     <hr>
                     
                     <h6 class="fw-bold text-muted mb-3 mt-4">Platform Activity</h6>
+                    <?php if ($user['role'] === 'maintenance'): ?>
+                        <div class="mb-3">
+                            <h6 class="fw-bold text-success">Problems Completed</h6>
+                            <?php if (empty($completedProblems)): ?>
+                                <p class="text-muted mb-0">No completed problems yet.</p>
+                            <?php else: ?>
+                                <div class="list-group">
+                                    <?php foreach ($completedProblems as $problem): ?>
+                                        <div class="list-group-item">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <strong><?= htmlspecialchars($problem['location'], ENT_QUOTES, 'UTF-8') ?></strong>
+                                                <span class="badge bg-success rounded-pill">Completed</span>
+                                            </div>
+                                            <div class="text-primary small fw-bold"><?= htmlspecialchars($problem['problem_type'], ENT_QUOTES, 'UTF-8') ?></div>
+                                            <div class="text-muted small"><?= htmlspecialchars($problem['description'], ENT_QUOTES, 'UTF-8') ?></div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php else: ?>
                     <div class="row text-center g-3">
                         <div class="col-md-4">
                             <div class="p-3 bg-light rounded-3 border border-light-subtle">
@@ -99,6 +130,7 @@ $stats = $stmt_stats->fetch();
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                     <p class="text-muted small text-end mt-3">Registered on: <?= date('F j, Y, g:i a', strtotime($user['created_at'])) ?></p>
                 </div>
             </div>

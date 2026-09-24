@@ -15,8 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $stmt = $pdo->prepare("UPDATE maintenance_requests SET status = ? WHERE id = ?");
-        $stmt->execute([$status, $id]);
+        $completedBy = $status === 'Completed' ? $_SESSION['user_id'] : null;
+        $stmt = $pdo->prepare("UPDATE maintenance_requests SET status = ?, completed_by = ? WHERE id = ?");
+        $stmt->execute([$status, $completedBy, $id]);
 
         $_SESSION['flash_success'] = "Status updated successfully.";
         header("Location: ../admin/request_view.php?id=" . urlencode($id));

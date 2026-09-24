@@ -1,5 +1,202 @@
+:root {
+    --campus-blue: #0078d7;
+    --campus-blue-dark: #005fa3;
+    --campus-ink: #18324d;
+    --campus-muted: #607086;
+    --campus-surface: #ffffff;
+    --campus-background: #f3f8ff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--campus-ink);
+    background:
+        radial-gradient(circle at 12% 18%, rgba(0, 120, 215, 0.18), transparent 28%),
+        radial-gradient(circle at 88% 78%, rgba(255, 193, 7, 0.14), transparent 25%),
+        linear-gradient(135deg, #dcecff 0%, #f9fbff 48%, #e7f3ff 100%);
+    min-height: 100vh;
+    position: relative;
+}
+
+.tools-background {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    font-size: clamp(58px, 7.5vw, 112px);
+    opacity: 0.56;
+    filter: saturate(1.25) drop-shadow(0 5px 4px rgba(24, 50, 77, 0.24));
+    pointer-events: none;
+    animation: floatTools 10s infinite alternate ease-in-out;
+}
+
+.tools-background span {
+    position: absolute;
+    display: block;
+    filter: saturate(1.4) drop-shadow(0 5px 9px rgba(0, 120, 215, 0.28));
+    text-shadow: 0 0 2px #ffffff, 0 3px 0 rgba(255, 255, 255, 0.55);
+}
+
+.tools-background span:nth-child(1) {
+    top: 10%;
+    left: 5%;
+}
+
+.tools-background span:nth-child(2) {
+    top: 20%;
+    right: 10%;
+}
+
+.tools-background span:nth-child(3) {
+    bottom: 15%;
+    left: 15%;
+}
+
+.tools-background span:nth-child(4) {
+    right: 5%;
+    bottom: 10%;
+}
+
+.tools-background span:nth-child(5) {
+    top: 46%;
+    left: 47%;
+}
+
+.tools-background span:nth-child(6) {
+    top: 5%;
+    left: 27%;
+}
+
+.tools-background span:nth-child(7) {
+    top: 8%;
+    right: 30%;
+}
+
+.tools-background span:nth-child(8) {
+    top: 42%;
+    left: 2%;
+}
+
+.tools-background span:nth-child(9) {
+    right: 2%;
+    bottom: 42%;
+}
+
+.tools-background span:nth-child(10) {
+    bottom: 4%;
+    left: 32%;
+}
+
+.tools-background span:nth-child(11) {
+    right: 28%;
+    bottom: 5%;
+}
+
+.tools-background span:nth-child(12) {
+    top: 40%;
+    right: 43%;
+}
+
+.tools-background span:nth-child(2n) {
+    filter: saturate(1.65) hue-rotate(8deg) drop-shadow(0 5px 9px rgba(245, 181, 0, 0.3));
+}
+
+@media (max-width: 767.98px) {
+    .tools-background {
+        font-size: 44px;
+        opacity: 0.42;
+    }
+}
+
+@keyframes floatTools {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    100% {
+        transform: rotate(2deg) scale(1.04);
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--campus-ink);
+    font-weight: 700;
+}
+
+a {
+    color: var(--campus-blue);
+}
+
+.card {
+    position: relative;
+    z-index: 1;
+    background: var(--campus-surface);
+    border: 1px solid rgba(0, 120, 215, 0.08) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(24, 50, 77, 0.1) !important;
+}
+
+.card-header {
+    color: var(--campus-ink);
+    border-bottom: 1px solid rgba(24, 50, 77, 0.08) !important;
+}
+
+.card-header.bg-primary,
+.card-header.bg-success {
+    background: var(--campus-blue) !important;
+    color: #ffffff !important;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    color: var(--campus-ink);
+    background-color: #ffffff;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--campus-blue);
+    box-shadow: 0 0 0 0.2rem rgba(0, 120, 215, 0.15);
+}
+
+.btn-primary,
+.btn-success {
+    background: var(--campus-blue) !important;
+    border-color: var(--campus-blue) !important;
+}
+
+.btn-primary:hover,
+.btn-success:hover {
+    background: var(--campus-blue-dark) !important;
+    border-color: var(--campus-blue-dark) !important;
+}
+
+.btn-outline-primary {
+    color: var(--campus-blue);
+    border-color: var(--campus-blue);
+}
+
+.btn-outline-primary:hover {
+    background: var(--campus-blue);
+    border-color: var(--campus-blue);
+}
+
+.table-dark {
+    --bs-table-bg: #20262c;
+}
+
+.table-light {
+    --bs-table-bg: #f8fafc;
+}
+
+.alert {
+    border-radius: 8px;
 }
 
 /* Glassmorphism Navbar - Premium Dark Glass */
