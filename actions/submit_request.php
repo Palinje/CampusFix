@@ -21,8 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dailyCountStmt = $pdo->prepare("SELECT COUNT(*) FROM maintenance_requests WHERE user_id = ? AND DATE(created_at) = CURDATE()");
         $dailyCountStmt->execute([$user_id]);
 
-        if ((int) $dailyCountStmt->fetchColumn() >= 1) {
-            $_SESSION['flash_error'] = "You can submit only one maintenance request per day.";
+        if ((int) $dailyCountStmt->fetchColumn() >= 2) {
+            $_SESSION['flash_error'] = "You can submit only two maintenance requests per day.";
+            header("Location: ../user/submit_request.php");
+            exit();
+        }
+
+        $dailyTypeStmt = $pdo->prepare("SELECT COUNT(*) FROM maintenance_requests WHERE user_id = ? AND problem_type = ? AND DATE(created_at) = CURDATE()");
+        $dailyTypeStmt->execute([$user_id, $problem_type]);
+
+        if ((int) $dailyTypeStmt->fetchColumn() >= 1) {
+            $_SESSION['flash_error'] = "Your requests for the day must have different problem types.";
             header("Location: ../user/submit_request.php");
             exit();
         }
