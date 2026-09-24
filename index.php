@@ -35,11 +35,10 @@ if (isset($_SESSION['user_id'])) {
     <div class="row justify-content-center">
         <div class="col-md-8 py-5 landing-content">
             <img src="assets/images/logo.png" alt="CampusFix" style="max-height: 250px;" class="mb-4 rounded">
-            <p class="lead mb-5 text-muted">Welcome to the CampusFix Maintenance Request System. Please login or register to submit and track maintenance issues across the campus.</p>
+            <p class="lead mb-5 text-muted">Welcome to the CampusFix Maintenance Request System. Please login to submit and track maintenance issues across the campus.</p>
 
             <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
                 <a href="auth/login.php" class="btn btn-primary btn-lg px-5 shadow-sm rounded-pill">Login</a>
-                <a href="auth/register.php" class="btn btn-outline-primary btn-lg px-5 shadow-sm rounded-pill">Register</a>
             </div>
         </div>
     </div>

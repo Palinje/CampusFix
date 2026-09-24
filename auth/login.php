@@ -79,9 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <button type="submit" class="btn btn-success w-100 py-2">Login</button>
                     </form>
-                    <div class="mt-4 text-center">
-                        <p class="mb-0">Don't have an account? <a href="register.php">Register here</a>.</p>
-                    </div>
                 </div>
             </div>
         </div>
