@@ -18,6 +18,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
+        $dailyCountStmt = $pdo->prepare("SELECT COUNT(*) FROM maintenance_requests WHERE user_id = ? AND DATE(created_at) = CURDATE()");
+        $dailyCountStmt->execute([$user_id]);
+
+        if ((int) $dailyCountStmt->fetchColumn() >= 1) {
+            $_SESSION['flash_error'] = "You can submit only one maintenance request per day.";
+            header("Location: ../user/submit_request.php");
+            exit();
+        }
+
+        $issueCountStmt = $pdo->prepare("SELECT COUNT(*) FROM maintenance_requests WHERE location = ? AND problem_type = ?");
+        $issueCountStmt->execute([$location, $problem_type]);
+
+        if ((int) $issueCountStmt->fetchColumn() >= 15) {
+            $_SESSION['flash_error'] = "This issue has reached the maximum of 15 requests.";
+            header("Location: ../user/submit_request.php");
+            exit();
+        }
+
         // Prepare and execute the PDO insert statement
         $stmt = $pdo->prepare("INSERT INTO maintenance_requests (user_id, location, problem_type, description, status) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$user_id, $location, $problem_type, $description, $status]);

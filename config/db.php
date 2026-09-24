@@ -5,7 +5,7 @@ $user = 'root';
 $pass = '';
 
 // Define base URL for absolute paths
-define('BASE_URL', '/GitHub_Clone_File_Projects/CampusFix');
+define('BASE_URL', '/CampusFix');
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
