@@ -12,7 +12,10 @@ $users = $stmt->fetchAll();
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2><i class="fa-solid fa-users me-2"></i>Manage Users</h2>
-        <a href="dashboard.php" class="btn btn-outline-secondary shadow-sm rounded-pill px-4">&larr; Back to Dashboard</a>
+        <div class="d-flex gap-2">
+            <a href="../auth/register.php" class="btn btn-primary shadow-sm rounded-pill px-4"><i class="fa-solid fa-user-plus me-2"></i>Register User</a>
+            <a href="dashboard.php" class="btn btn-outline-secondary shadow-sm rounded-pill px-4">&larr; Back to Dashboard</a>
+        </div>
     </div>
 
     <?php if (isset($_GET['success'])): ?>

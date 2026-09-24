@@ -65,11 +65,6 @@ $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : '';
                                 <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Login
                             </a>
                         </li>
-                        <li class="nav-item ms-lg-3 mt-3 mt-lg-0 d-flex align-items-center">
-                            <a class="nav-link btn glass-btn-register px-4 py-2" href="<?= BASE_URL ?>/auth/register.php">
-                                <i class="fa-solid fa-user-plus me-2"></i>Register
-                            </a>
-                        </li>
                     <?php endif; ?>
                 </ul>
             </div>

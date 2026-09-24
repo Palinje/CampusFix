@@ -1,4 +1,6 @@
 <?php
+require_once '../includes/auth.php';
+requireSuperAdmin();
 require_once '../config/db.php';
 require_once '../includes/header.php';
 

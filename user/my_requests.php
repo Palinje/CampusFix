@@ -6,7 +6,14 @@ require_once '../includes/header.php';
 $user_id = $_SESSION['user_id'];
 
 // Fetch the user's requests ordered by newest first
-$stmt = $pdo->prepare("SELECT * FROM maintenance_requests WHERE user_id = ? ORDER BY created_at DESC");
+$stmt = $pdo->prepare("SELECT r.*,
+                                                            (SELECT COUNT(*)
+                                                             FROM maintenance_requests matching_r
+                                                             WHERE matching_r.location = r.location
+                                                                 AND matching_r.problem_type = r.problem_type) AS request_count
+                                             FROM maintenance_requests r
+                                             WHERE r.user_id = ?
+                                             ORDER BY r.created_at DESC");
 $stmt->execute([$user_id]);
 $requests = $stmt->fetchAll();
 ?>
@@ -30,9 +37,9 @@ $requests = $stmt->fetchAll();
                 <table class="table table-hover table-striped mb-0 align-middle">
                     <thead class="table-dark">
                         <tr>
-                            <th class="ps-3">ID</th>
                             <th>Location</th>
                             <th>Problem Type</th>
+                            <th>Priority</th>
                             <th>Status</th>
                             <th>Date Submitted</th>
                             <th class="pe-3 text-end">Action</th>
@@ -48,10 +55,15 @@ $requests = $stmt->fetchAll();
                             </tr>
                         <?php else: ?>
                             <?php foreach ($requests as $request): ?>
+                                <?php
+                                    $requestCount = (int) $request['request_count'];
+                                    $priority = $requestCount <= 4 ? 'Low' : ($requestCount <= 8 ? 'Medium' : ($requestCount <= 12 ? 'High' : 'Extreme'));
+                                    $priorityClass = $priority === 'Low' ? 'bg-success' : ($priority === 'Medium' ? 'bg-info text-dark' : ($priority === 'High' ? 'bg-warning text-dark' : 'bg-danger'));
+                                ?>
                                 <tr>
-                                    <td class="ps-3 fw-bold text-muted">#<?= htmlspecialchars($request['id'], ENT_QUOTES, 'UTF-8') ?></td>
                                     <td><?= htmlspecialchars($request['location'], ENT_QUOTES, 'UTF-8') ?></td>
                                     <td><?= htmlspecialchars($request['problem_type'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><span class="badge rounded-pill <?= $priorityClass ?> px-3 py-2"><?= $priority ?></span></td>
                                     <td>
                                         <?php if ($request['status'] === 'Pending'): ?>
                                             <span class="badge rounded-pill bg-warning text-dark px-3 py-2"><i class="fa-regular fa-clock me-1"></i>Pending</span>
