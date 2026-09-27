@@ -4,8 +4,19 @@ $db   = 'school_maintenance_db';
 $user = 'root';
 $pass = '';
 
-// Define base URL for absolute paths
-define('BASE_URL', '/CampusFix');
+// Derive the application URL from the current request path.
+$scriptName = str_replace('\\', '/', $_SERVER['SCRIPT_NAME'] ?? '');
+$basePath = $scriptName !== '' ? rtrim(dirname($scriptName), '/\\') : '';
+$basePath = $basePath === '.' ? '' : $basePath;
+
+foreach (['/admin', '/auth', '/user', '/actions'] as $routeDirectory) {
+    if (substr($basePath, -strlen($routeDirectory)) === $routeDirectory) {
+        $basePath = substr($basePath, 0, -strlen($routeDirectory));
+        break;
+    }
+}
+
+define('BASE_URL', rtrim($basePath, '/'));
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
