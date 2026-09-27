@@ -10,6 +10,6 @@ session_unset();
 // Destroy the session completely
 session_destroy();
 
-// Redirect to login page
-header("Location: /CampusFix/auth/login.php");
+// Redirect to login page relative to this directory
+header('Location: login.php');
 exit();
