@@ -21,7 +21,15 @@ $in_progress = $stats['in_progress'] ?? 0;
 $completed = $stats['completed'] ?? 0;
 
 // Get latest 5 requests for quick preview
-$stmt = $pdo->prepare("SELECT * FROM maintenance_requests WHERE user_id = ? ORDER BY created_at DESC LIMIT 5");
+$stmt = $pdo->prepare("SELECT r.*,
+                                                            (SELECT COUNT(*)
+                                                             FROM maintenance_requests matching_r
+                                                             WHERE matching_r.location = r.location
+                                                                 AND matching_r.problem_type = r.problem_type) AS request_count
+                                             FROM maintenance_requests r
+                                             WHERE r.user_id = ?
+                                             ORDER BY r.created_at DESC
+                                             LIMIT 5");
 $stmt->execute([$user_id]);
 $latest_requests = $stmt->fetchAll();
 ?>
@@ -88,9 +96,9 @@ $latest_requests = $stmt->fetchAll();
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th class="ps-4 py-3">ID</th>
                                     <th class="py-3">Location</th>
                                     <th class="py-3">Type</th>
+                                    <th class="py-3">Priority</th>
                                     <th class="py-3">Status</th>
                                     <th class="py-3 pe-4">Date</th>
                                 </tr>
@@ -104,10 +112,15 @@ $latest_requests = $stmt->fetchAll();
                                     </tr>
                                 <?php else: ?>
                                     <?php foreach ($latest_requests as $req): ?>
+                                        <?php
+                                            $requestCount = (int) $req['request_count'];
+                                            $priority = $requestCount <= 4 ? 'Low' : ($requestCount <= 8 ? 'Medium' : ($requestCount <= 12 ? 'High' : 'Extreme'));
+                                            $priorityClass = $priority === 'Low' ? 'bg-success' : ($priority === 'Medium' ? 'bg-info text-dark' : ($priority === 'High' ? 'bg-warning text-dark' : 'bg-danger'));
+                                        ?>
                                         <tr>
-                                            <td class="ps-4 fw-bold text-muted">#<?= htmlspecialchars($req['id'], ENT_QUOTES, 'UTF-8') ?></td>
                                             <td><?= htmlspecialchars($req['location'], ENT_QUOTES, 'UTF-8') ?></td>
                                             <td><?= htmlspecialchars($req['problem_type'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><span class="badge <?= $priorityClass ?> rounded-pill px-3 py-2"><?= $priority ?></span></td>
                                             <td>
                                                 <?php if ($req['status'] === 'Pending'): ?>
                                                     <span class="badge bg-warning text-dark rounded-pill px-3 py-2">Pending</span>

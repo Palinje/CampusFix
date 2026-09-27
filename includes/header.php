@@ -35,8 +35,22 @@ if (empty($_SESSION['csrf_token'])) {
 </head>
 
 <body>
+    <div class="tools-background" aria-hidden="true">
+        <span>🔧</span>
+        <span>🔨</span>
+        <span>🪛</span>
+        <span>⚙️</span>
+        <span>🔩</span>
+        <span>🔧</span>
+        <span>🔨</span>
+        <span>🪚</span>
+        <span>🛠️</span>
+        <span>🔩</span>
+        <span>⚙️</span>
+        <span>🔧</span>
+    </div>
     <!-- Page Wrapper -->
-    <div class="d-flex flex-column min-vh-100">
+    <div class="d-flex flex-column min-vh-100 position-relative z-1">
         <?php require_once __DIR__ . '/navbar.php'; ?>
 
         <div class="container mt-3">

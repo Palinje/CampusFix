@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img src="../assets/images/logo.png" alt="CampusFix Logo" style="max-height: 120px;" class="rounded shadow-sm">
             </div>
             <div class="card shadow-sm border-0">
-                <div class="card-header bg-success text-white">
+                <div class="card-header bg-primary text-white">
                     <h4 class="mb-0"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</h4>
                 </div>
                 <div class="card-body p-4">
@@ -79,9 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <button type="submit" class="btn btn-success w-100 py-2">Login</button>
                     </form>
-                    <div class="mt-4 text-center">
-                        <p class="mb-0">Don't have an account? <a href="register.php">Register here</a>.</p>
-                    </div>
                 </div>
             </div>
         </div>

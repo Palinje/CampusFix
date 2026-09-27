@@ -65,6 +65,12 @@ if (!$request) {
                                     </div>
                                 </td>
                             </tr>
+                            <?php if (!empty($request['image_path'])): ?>
+                                <tr>
+                                    <th class="text-muted ps-0">Picture:</th>
+                                    <td><a href="<?= BASE_URL . '/' . htmlspecialchars($request['image_path'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener"><img src="<?= BASE_URL . '/' . htmlspecialchars($request['image_path'], ENT_QUOTES, 'UTF-8') ?>" alt="Attached maintenance issue" class="img-fluid rounded-3 border" style="max-height: 300px;"></a></td>
+                                </tr>
+                            <?php endif; ?>
                             <tr>
                                 <th class="text-muted ps-0">Submitted On:</th>
                                 <td><?= date('F j, Y, g:i a', strtotime($request['created_at'])) ?></td>

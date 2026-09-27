@@ -9,24 +9,39 @@ $search = trim($_GET['search'] ?? '');
 $status_filter = $_GET['status'] ?? '';
 
 // Build the query dynamically based on filters
-$sql = "SELECT r.*, u.full_name, u.email 
-        FROM maintenance_requests r 
-        JOIN users u ON r.user_id = u.id 
+$sql = "SELECT MAX(r.id) AS id,
+               r.location,
+               r.problem_type,
+               COUNT(*) AS request_count,
+               MAX(r.status) AS status,
+               MAX(r.created_at) AS created_at,
+               COUNT(DISTINCT r.user_id) AS reporter_count
+        FROM maintenance_requests r
         WHERE 1=1";
 $params = [];
 
 if ($search) {
-    $sql .= " AND (r.location LIKE ? OR r.problem_type LIKE ? OR r.description LIKE ?)";
+    $sql .= " AND EXISTS (
+                SELECT 1 FROM maintenance_requests search_r
+                WHERE search_r.location = r.location
+                  AND search_r.problem_type = r.problem_type
+                  AND (search_r.location LIKE ? OR search_r.problem_type LIKE ? OR search_r.description LIKE ?)
+            )";
     $likeSearch = "%{$search}%";
     array_push($params, $likeSearch, $likeSearch, $likeSearch);
 }
 
 if ($status_filter && $status_filter !== 'All') {
-    $sql .= " AND r.status = ?";
+    $sql .= " AND EXISTS (
+                SELECT 1 FROM maintenance_requests status_r
+                WHERE status_r.location = r.location
+                  AND status_r.problem_type = r.problem_type
+                  AND status_r.status = ?
+            )";
     array_push($params, $status_filter);
 }
 
-$sql .= " ORDER BY r.created_at DESC";
+$sql .= " GROUP BY r.location, r.problem_type ORDER BY created_at DESC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
@@ -67,10 +82,10 @@ $requests = $stmt->fetchAll();
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-dark">
                         <tr>
-                            <th class="ps-4 py-3">ID</th>
                             <th class="py-3">Reporter</th>
                             <th class="py-3">Location</th>
                             <th class="py-3">Problem Type</th>
+                            <th class="py-3">Priority</th>
                             <th class="py-3">Status</th>
                             <th class="py-3">Date</th>
                             <th class="pe-4 py-3 text-end">Action</th>
@@ -86,14 +101,21 @@ $requests = $stmt->fetchAll();
                             </tr>
                         <?php else: ?>
                             <?php foreach ($requests as $req): ?>
+                                <?php
+                                    $requestCount = (int) $req['request_count'];
+                                    $priority = $requestCount <= 4 ? 'Low' : ($requestCount <= 8 ? 'Medium' : ($requestCount <= 12 ? 'High' : 'Extreme'));
+                                    $priorityClass = $priority === 'Low' ? 'bg-success' : ($priority === 'Medium' ? 'bg-info text-dark' : ($priority === 'High' ? 'bg-warning text-dark' : 'bg-danger'));
+                                ?>
                                 <tr>
-                                    <td class="ps-4 fw-bold text-muted">#<?= htmlspecialchars($req['id'], ENT_QUOTES, 'UTF-8') ?></td>
                                     <td>
-                                        <div class="fw-bold"><?= htmlspecialchars($req['full_name'], ENT_QUOTES, 'UTF-8') ?></div>
-                                        <div class="text-muted small"><?= htmlspecialchars($req['email'], ENT_QUOTES, 'UTF-8') ?></div>
+                                        <div class="fw-bold"><?= $requestCount ?> request<?= $requestCount === 1 ? '' : 's' ?></div>
+                                        <div class="text-muted small"><?= $req['reporter_count'] ?> student<?= (int) $req['reporter_count'] === 1 ? '' : 's' ?></div>
                                     </td>
                                     <td><?= htmlspecialchars($req['location'], ENT_QUOTES, 'UTF-8') ?></td>
                                     <td><?= htmlspecialchars($req['problem_type'], ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td>
+                                        <span class="badge <?= $priorityClass ?> rounded-pill px-3 py-2"><?= $priority ?></span>
+                                    </td>
                                     <td>
                                         <?php if ($req['status'] === 'Pending'): ?>
                                             <span class="badge bg-warning text-dark rounded-pill px-3 py-2">Pending</span>

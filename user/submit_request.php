@@ -16,7 +16,7 @@ require_once '../includes/header.php';
                         <div class="alert alert-danger"><?= htmlspecialchars($_GET['error'], ENT_QUOTES, 'UTF-8') ?></div>
                     <?php endif; ?>
                     
-                    <form action="../actions/submit_request.php" method="POST">
+                    <form action="../actions/submit_request.php" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
                         
                         <div class="mb-3">
@@ -39,6 +39,12 @@ require_once '../includes/header.php';
                         <div class="mb-4">
                             <label for="description" class="form-label fw-bold">Description</label>
                             <textarea class="form-control" id="description" name="description" rows="5" placeholder="Please provide specific details about the issue to help our maintenance team..." required></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="image" class="form-label fw-bold">Attach a Picture <span class="text-muted fw-normal">(optional, max 5 MB)</span></label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/jpeg,image/png,image/gif,image/webp">
+                            <div class="form-text">Allowed formats: JPG, PNG, GIF, or WebP.</div>
                         </div>
                         
                         <div class="d-flex justify-content-between">
